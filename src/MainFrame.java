@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-	public class MainFrame extends JFrame
+	public class MainFrame extends JFrame implements ActionListener
 
 	{
 	    private String text;
@@ -31,7 +31,7 @@ import javax.swing.JPanel;
 	        frame = new JFrame();
 	        mainPanel = new JPanel();
 	        contentPanel = new ContentPanel();
-	        btnPanel = new ButtonPanel();
+	        btnPanel = new ButtonPanel(contentPanel);
 	        
 	        
 	        mainPanel.setLayout(new GridBagLayout());
@@ -71,7 +71,6 @@ import javax.swing.JPanel;
 	        mainPanel.add(contentPanel.getContentPanel(), c);
 	        
 	        
-	        
 	        // neu Button 3. Zeile
 	        newBtn = new JButton("neu");
 	        c.gridx = 0;
@@ -85,12 +84,9 @@ import javax.swing.JPanel;
 	        mainPanel.add(newBtn, c);
 	        
 	        
+	      // Kiwi 
 	        
-
 	      
-	            
-	        
-	        
 	        
 	        
 	        //Action Listener für das Popup
@@ -125,6 +121,15 @@ import javax.swing.JPanel;
 	        
 	        
 	    }
+	    
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			System.out.println("button has been pressed");
+			btnPanel.addToBtnArray("./Bilder/rebull.png");
+			
+		}
+	    
 	    
 	}
 	
