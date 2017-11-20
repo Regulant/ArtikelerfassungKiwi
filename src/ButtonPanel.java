@@ -79,11 +79,15 @@ public class ButtonPanel  // Bildet die erste Reihe
 	public void addToBtnArray(String path)
 	{
 		ImageIcon icon = new ImageIcon(path);
-		JButton imageBtn = new JButton("does this work", icon);
+		JButton appendBtn = new JButton("does this work", icon);
 		
-		System.out.println("groesse = " + buttons.size());
-		buttons.add(imageBtn);
-		System.out.println("groesse = " + buttons.size());
+		System.out.println("groesse vorher = " + buttons.size());
+		appendBtn.setPreferredSize(new Dimension(80,90));
+		appendBtn.setMargin(new Insets(0, 0, 0, 0));
+		appendBtn.setVisible(true);
+		buttons.add(appendBtn);
+		buttonPanel.add(appendBtn);
+		System.out.println("groesse nachher = " + buttons.size());
 		
 		
 	}

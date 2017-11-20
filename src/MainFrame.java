@@ -65,7 +65,7 @@ import javax.swing.JPanel;
 	        
 	        c.gridx = 0;
 	        c.gridy = 1;
-	         c.weightx = 1;
+	        c.weightx = 1;
 	        c.weighty = 1;
 	    
 	        mainPanel.add(contentPanel.getContentPanel(), c);
@@ -98,6 +98,11 @@ import javax.swing.JPanel;
 				juhu.displayGUI();
 				
 				
+				
+				btnPanel.addToBtnArray("./Bilder/redbull.png");
+				
+				
+				
 					
 		/*		JOptionPane.showMessageDialog(null,getPanel() );
 					
@@ -121,6 +126,8 @@ import javax.swing.JPanel;
 	        
 	        
 	    }
+	    
+	    // action listener für Buttonpanel appending
 	    
 		@Override
 		public void actionPerformed(ActionEvent e)
