@@ -87,11 +87,7 @@ public class ButtonPanel  // Bildet die erste Reihe
 		appendBtn.setVisible(true);
 		buttons.add(appendBtn);
 		buttonPanel.add(appendBtn);
-		System.out.println("groesse nachher = " + buttons.size());
-		
-		// LÖSUNG!
-		buttonPanel.revalidate();	
-		
+		System.out.println("groesse nachher = " + buttons.size());		
 	}
 	
 	
