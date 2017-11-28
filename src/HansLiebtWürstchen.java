@@ -8,6 +8,7 @@ import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -30,15 +31,18 @@ public class HansLiebtWürstchen extends JPanel {
 	private JPanel midPanel;
 	private JPanel mainPanel;
 	private JButton saveButton;
+	private JButton explorerButton;
 	private JLabel label;
 	//private ImageIcon bildd;
+	
+	private int counter = 0;
 	
 	
 	
 
 	
 	
-	
+	private DbTest db = new DbTest();
 	private GridBagConstraints gc = new GridBagConstraints();
 	
 	public ImageIcon ResizeImage(String ImagePath) {
@@ -47,6 +51,7 @@ public class HansLiebtWürstchen extends JPanel {
 		Image img = MyImage.getImage();
 		Image newImg = img.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon image = new ImageIcon(newImg);
+		
 		return image;
 		
 	}
@@ -63,18 +68,19 @@ public class HansLiebtWürstchen extends JPanel {
 		mainPanel = new JPanel();
 		topPanel = new JPanel();
 		midPanel = new JPanel();
+		explorerButton = new JButton("Bild auswählen");
 		saveButton = new JButton("Save");
 		txtFieldLabel = new JTextField(20);
 		txtFieldTitel = new JTextField(20);
 		txtArea = new TextArea("Hier könnte Ihre Werbung stehen ");
-		labelTitel = new JLabel("Titel:");
-		labelLabel = new JLabel("Label:");
+		labelTitel = new JLabel("Überschrift:");
+		labelLabel = new JLabel("Author:");
 		label = new JLabel("*********BILD**********");
 		
 	//	bildd = new ImageIcon("./Bilder/Bilder.jpg");
 		
 		
-	
+		//  db.addInto(1, 1, txtfieldLabel, txtarea,  )
 		
 		
 		
@@ -82,24 +88,50 @@ public class HansLiebtWürstchen extends JPanel {
 		saveButton.addActionListener(new ActionListener() {
 
 		
-			public void actionPerformed(ActionEvent arg0) {
-
-			JFileChooser file = new JFileChooser();
-			file.setCurrentDirectory(new File(System.getProperty("user.home")));
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "gif", "png");
-			file.addChoosableFileFilter(filter);
-			int result = file.showSaveDialog(null);
-			if(result == JFileChooser.APPROVE_OPTION) {
-				File selectedFile = file.getSelectedFile();
-				String path = selectedFile.getAbsolutePath();
-				label.setIcon(ResizeImage(path));
+			public void actionPerformed(ActionEvent arg0){
+				
+			counter++;
+		
+			try {
+				db.addData(counter, txtFieldLabel.getText(), txtFieldTitel.getText(), txtArea.getText());
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 			
-			else if(result == JFileChooser.CANCEL_OPTION) {
-				System.out.println("Keine File ausgewählt!");
+			//Auslesen der DB
+			try {
+				db.readDB();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
+			
+			
 		}
 		
+		});
+		
+		explorerButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				JFileChooser file = new JFileChooser();
+				file.setCurrentDirectory(new File(System.getProperty("user.home")));
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "gif", "png");
+				file.addChoosableFileFilter(filter);
+				int result = file.showSaveDialog(null);
+				if(result == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = file.getSelectedFile();
+					String path = selectedFile.getAbsolutePath();
+					label.setIcon(ResizeImage(path));
+					
+				}
+				
+				else if(result == JFileChooser.CANCEL_OPTION) {
+					System.out.println("Keine File ausgewählt!");
+					
+				}
+			}		
 		});
 		
 	
@@ -175,6 +207,12 @@ public class HansLiebtWürstchen extends JPanel {
 		gc.weighty = 1;
 		gc.anchor = GridBagConstraints.CENTER;
 		topPanel.add(label, gc);
+		
+		gc.gridx = 2;
+		gc.gridy = 1;
+		gc.weightx = 1;
+		gc.weighty = 1;
+		topPanel.add(explorerButton, gc);
 		
 		
 	/*	gc.gridx = 4;
